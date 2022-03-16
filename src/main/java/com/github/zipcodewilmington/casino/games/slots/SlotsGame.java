@@ -10,6 +10,8 @@ import java.util.Scanner;
  * Created by leon on 7/21/2020.
  */
 public class SlotsGame implements GamblingGame<SlotsPlayer> {
+    //Variables
+
 
     public static void main(String []  args) {
         Random random = new Random();
@@ -55,6 +57,7 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     @Override
     public void removePlayer(SlotsPlayer player) {
+
 
     }
 
