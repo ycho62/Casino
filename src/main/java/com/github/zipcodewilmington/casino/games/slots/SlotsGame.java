@@ -1,12 +1,15 @@
 package com.github.zipcodewilmington.casino.games.slots;
 
+import com.github.zipcodewilmington.casino.games.GameInterface.GamblingGame;
+import com.github.zipcodewilmington.casino.games.Person.Player;
+
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsGame {
+public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     public static void main(String []  args) {
         Random random = new Random();
@@ -22,6 +25,51 @@ public class SlotsGame {
         column3 = random.nextInt(10);
 
         System.out.println("|"+column1+"|"+column2+"|"+column3+"|");
+
+    }
+
+    @Override
+    public void setBets() {
+
+    }
+
+    @Override
+    public void distributeWinningsToWinners() {
+
+    }
+
+    @Override
+    public void play() {
+
+    }
+
+    @Override
+    public void setPlayerMax() {
+
+    }
+
+    @Override
+    public void addPlayer(SlotsPlayer player) {
+
+    }
+
+    @Override
+    public void removePlayer(SlotsPlayer player) {
+
+    }
+
+    @Override
+    public void setWinCondition() {
+
+    }
+
+    @Override
+    public Player[] getWinner() {
+        return new Player[0];
+    }
+
+    @Override
+    public void exit() {
 
     }
 }
