@@ -28,6 +28,13 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
         System.out.println("|"+column1+"|"+column2+"|"+column3+"|");
 
+        if (column1 == 7 && column2 == 7 && column3 ==7 ) {
+            System.out.println("You just won the jackpot!");
+        }
+        else {
+            System.out.println("Try again :)");
+        }
+
     }
 
     @Override
