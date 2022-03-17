@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class SlotsGame implements GamblingGame<SlotsPlayer> {
     //Variables
+    SlotsPlayer player;
 
 
     public static void main(String []  args) {
@@ -63,6 +64,8 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     @Override
     public void addPlayer(SlotsPlayer player) {
+        this.player = player;
+
 
     }
 
@@ -89,5 +92,9 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     @Override
     public void exit() {
 
+    }
+
+    public SlotsPlayer getPlayer(){
+        return this.player;
     }
 }
