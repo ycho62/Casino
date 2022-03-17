@@ -12,13 +12,11 @@ import java.util.Scanner;
 public class SlotsGame implements GamblingGame<SlotsPlayer> {
     //Variables
     SlotsPlayer player;
+    private int maxPartySize;
 
 
     public static void main(String []  args) {
         Random random = new Random();
-        Scanner scanner = new Scanner (System.in);
-        int min = 0;
-        int max = 10;
         int column1;
         int column2;
         int column3;
@@ -57,9 +55,13 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     }
 
+    public int getPlayerMax() {
+        return this.maxPartySize;
+    }
+
     @Override
     public void setPlayerMax() {
-
+    this.maxPartySize = 1;
     }
 
     @Override
