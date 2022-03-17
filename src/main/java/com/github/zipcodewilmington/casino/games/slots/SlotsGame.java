@@ -43,6 +43,10 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     }
 
     @Override
+    public void distributeWinningsToWinners(SlotsPlayer winner) {
+
+    }
+
     public void distributeWinningsToWinners() {
 
     }
@@ -69,13 +73,17 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     }
 
     @Override
+    public void winConditionCheck(SlotsPlayer player) {
+
+    }
+
     public void setWinCondition() {
 
     }
 
     @Override
-    public Player[] getWinner() {
-        return new Player[0];
+    public SlotsPlayer[] getWinner() {
+        return new SlotsPlayer[0];
     }
 
     @Override
