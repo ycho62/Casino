@@ -15,6 +15,11 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     private int maxPartySize;
 
 
+
+    private int betAmount;
+
+
+
     public static void main(String []  args) {
         Random random = new Random();
         int column1;
@@ -36,9 +41,27 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     }
 
+    public String getBetMessage() {
+        return  "Please set your bets.";
+    }
+
     @Override
     public void setBets() {
+        System.out.println(getBetMessage());
+        this.getBetInput();
+    }
 
+    public int getBetAmount() {
+        return betAmount;
+    }
+
+    public void getBetInput() {
+        Scanner scanner = new Scanner (System.in);
+        this.betAmount = scanner.nextInt();
+    }
+
+    public void setBetAmount(int betAmount) {
+        this.betAmount = betAmount;
     }
 
     @Override
@@ -52,7 +75,7 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     @Override
     public void play() {
-
+    //overall method that contains the game loop, when it starts it should initiate the game.
     }
 
     public int getPlayerMax() {
