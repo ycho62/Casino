@@ -4,6 +4,9 @@ import com.github.zipcodewilmington.casino.games.Person.Gambler;
 import com.github.zipcodewilmington.casino.games.Person.Person;
 import com.github.zipcodewilmington.casino.games.Person.Player;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class CeeLoPlayer extends Player implements Gambler {
 
     public CeeLoPlayer(Person person) {
