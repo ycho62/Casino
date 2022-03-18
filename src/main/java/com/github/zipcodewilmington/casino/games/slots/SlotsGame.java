@@ -17,10 +17,10 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
 
     private int betAmount;
+    private boolean playing;
 
 
-
-    public static void main(String []  args) {
+    public static void spinSlots() {
         Random random = new Random();
         int column1;
         int column2;
@@ -39,6 +39,14 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
             System.out.println("Try again :)");
         }
 
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     public String getBetMessage() {
@@ -73,9 +81,18 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     }
 
+    public String playMessage() {
+
+    }
+
     @Override
     public void play() {
-    //overall method that contains the game loop, when it starts it should initiate the game.
+        //overall method that contains the game loop, when it starts it should initiate the game.
+        this.playing = true;
+        while (this.playing) {
+            this.setBets();
+            this.spinSlots();
+        }
     }
 
     public int getPlayerMax() {
@@ -122,4 +139,22 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     public SlotsPlayer getPlayer(){
         return this.player;
     }
+
+    public String continuePlayingMessage() {
+        return "Do you want to continue playing? Y/N";
+    }
+
+    public void checkContinuePlaying(){
+        Scanner continuePlaying = new Scanner (System.in);
+        System.out.println(continuePlayingMessage());
+        String result = continuePlaying.nextLine();
+
+            if (result == "Y"){
+                 this.playing = true;
+            }
+            else {
+                this.playing = false;
+            }
+    }
+
 }
