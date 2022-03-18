@@ -81,10 +81,6 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
 
     }
 
-    public String playMessage() {
-
-    }
-
     @Override
     public void play() {
         //overall method that contains the game loop, when it starts it should initiate the game.
