@@ -24,13 +24,13 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
     private boolean exitFlag = false;
 
     @Override
-    public void play(CeeLoPlayer player) {
+    public void play() {
         while(exitFlag) {
 //            while(tieFlag) {
                 String input;
                 System.out.println("Welcome to Cee-Lo");
                 setBets();
-                System.out.println(player.getPerson().getName() + "roll");
+//                System.out.println(getPerson().getName() + "roll");
                 input = scanner.nextLine();
                 if (input.equals("roll"))
 
@@ -94,9 +94,9 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
     public void distributeWinningsToWinners(CeeLoPlayer winner) {winner.addWinning(bets.get(winner));}
 
     @Override
-    public void winConditionCheck(CeeLoPlayer player1, CeeLoPlayer player2) {
-        int ceeLoPlayer1 = getRoll(player1);
-        int ceeLoPlayer2 = getRoll(player2);
+    public void winConditionCheck(CeeLoPlayer ceeLoPlayer) {
+        int ceeLoPlayer1 = getRoll(ceeLoPlayer);
+//        int ceeLoPlayer2 = getRoll(player2);
 
         if (ceeLoPlayer1 == 13) {
             System.out.println("Player 1 rolled a 4, 5, 6! It's an automatic win!");
@@ -125,7 +125,6 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
         }
     }
 
-
     public void afterRolls (){
         for (CeeLoPlayer s: bets.keySet()) {
             winConditionCheck(s);
@@ -133,8 +132,6 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
                 distributeWinningsToWinners(s);
         }
     }
-
-
 
 
     @Override
@@ -164,31 +161,31 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
 //    Rolls with all three dice that are the same = 6 + the dice value.
 
     public int RollValue(CeeLoPlayer player) {
-        Dice dice = new Dice();
-//        int[] getRoll = Dice.rollDice(diceNumber);// method to call rolldice
 
+        /*
+        getRoll(player : int[] diceroll)
+        how to get int[] diceroll -> roll value
+        assignValue.get(player) -> gets int[]
+        int[] newArr = int[]
+         */
+        int[] diceArray = assignRoll.get(player);
 
-        Integer[] diceArray = assignRollValue.get(player);
-
-        for (CeeLoPlayer s: assignRollValue.keySet())
-            assignRollValue.put(s, diceArray);
-
-        Arrays.sort(diceArray);// just to read outcome better.
         int rollValue = 0;
+
         for (int i = 0; i < diceArray.length; i++) {
             if (diceArray[0] == 4 && diceArray[1] == 5 && diceArray[2] == 6) {///automatic win break out of game pay winnings
                 return rollValue = 13;
             }else if(diceArray[0] == 1 && diceArray[1] == 2 && diceArray[2] == 3) {///automatic lose break out of game lose bet.
                 return 0;
-            }else if (diceArray[0].equals(diceArray[1]) && diceArray[0].equals(diceArray[2])){
+            }else if (diceArray[0]==(diceArray[1]) && diceArray[0]==(diceArray[2])){
                 return rollValue = diceArray[0] + 6;
-            }else if (diceArray[0].equals(diceArray[1])){
+            }else if (diceArray[0]==(diceArray[1])){
                 return rollValue = diceArray[2];
-            }else if (diceArray[0].equals(diceArray[2])){
+            }else if (diceArray[0]==(diceArray[2])){
                 return rollValue = diceArray[1];
-            }else if (diceArray[1].equals(diceArray[2])){
+            }else if (diceArray[1]==(diceArray[2])){
                 return rollValue = diceArray[0];
-            }else {
+            }else { //rerollFlag - (make reroll method calling original roll method , then check if it is no longer reroll )
             }
 
         }
