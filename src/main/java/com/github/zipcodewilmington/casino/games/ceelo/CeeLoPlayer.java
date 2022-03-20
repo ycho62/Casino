@@ -15,16 +15,16 @@ public class CeeLoPlayer extends Player implements Gambler {
 
     @Override
     public void addWinning(int winning) {
-
-    }
-
-    @Override
-    public void applyBet(int bet) {
-
+        this.getPerson().setWallet(this.getBalance() + winning);
     }
 
     @Override
     public int getBalance() {
-        return 0;
+        return this.getPerson().getWallet();
+    }
+
+    @Override
+    public void applyBet(int bet) {
+        this.getPerson().setWallet(this.getBalance()-bet);
     }
 }
