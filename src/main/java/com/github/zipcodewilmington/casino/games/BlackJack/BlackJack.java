@@ -124,7 +124,7 @@ public class BlackJack implements GamblingGame<BlackJackPlayer> {
     }
 
     public String bustCheck(BlackJackPlayer player) {
-        if (playerHandSum.get(player) > 21) {
+        while (playerHandSum.get(player) > 21) {
             if (AceFlag.get(player)) {
                 playerHandSum.put(player, playerHandSum.get(player)-10);
                 AceFlag.put(player, false);
@@ -264,7 +264,7 @@ public class BlackJack implements GamblingGame<BlackJackPlayer> {
         for (BlackJackPlayer s: bets.keySet()){
             walletBalance = s.getBalance();
             bet = console.getIntegerInput(
-                    "Hello" +s.getPerson().getName() + ", how much would you like to bet?" +
+                    "Hello " +s.getPerson().getName() + ", how much would you like to bet?" +
                             " Your current balance is " + s.getBalance());
             while (bet>walletBalance || bet<=0){
                 bet= console.getIntegerInput("Bet note valid, try again");
@@ -276,5 +276,9 @@ public class BlackJack implements GamblingGame<BlackJackPlayer> {
     @Override
     public void distributeWinningsToWinners(BlackJackPlayer winner) {
         winner.addWinning(bets.get(winner)*2);
+    }
+
+    public int getMaxPartySize() {
+        return maxPartySize;
     }
 }

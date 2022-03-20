@@ -31,6 +31,7 @@ public class Casino implements Runnable {
     public void run() {
         String arcadeDashBoardInput;
         CasinoAccountManager casinoAccountManager = new CasinoAccountManager();
+        casinoAccountManager.loadAccounts();
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
@@ -48,11 +49,6 @@ public class Casino implements Runnable {
                     } else if (gameSelectionInput.equals("BLACKJACK")) {
                         List<BlackJackPlayer> blackJackPlayerList = new ArrayList<>();
                         blackJackPlayerList.add(new BlackJackPlayer(casinoAccount.getProfile()));
-                        String input = console.getStringInput("Do you want to add more players to the game? (Yes/no)");
-                        while(input.equalsIgnoreCase("yes") && blackJackPlayerList.size()<4){
-                            blackJackPlayerList.add(new BlackJackPlayer(casinoAccountManager.accountLogin()));
-                            input=console.getStringInput("More players? (Yes/No)");
-                        }
                         new BlackjackEngine( new BlackJack(), blackJackPlayerList).start();
                     } else if (gameSelectionInput.equals("CEELO")) {
                         List<CeeLoPlayer> ceeLoPlayerList = new ArrayList<>();
@@ -84,24 +80,50 @@ public class Casino implements Runnable {
                 String name = console.getStringInput("Enter your name:");
                 Integer funds = console.getIntegerInput("Enter how much money you want to put in:");
                 newAccount.createProfile(name, funds);
-            } else if ("change-password".equals(arcadeDashBoardInput)) {
-                String accountName = console.getStringInput("Enter your account name:");
-                String accountPassword = console.getStringInput("Enter your current account password:");
-                CasinoAccount casinoAccount = casinoAccountManager.getAccount(accountName, accountPassword);
-                boolean isValidLogin = casinoAccount != null;
-                if (isValidLogin) {
-                    accountPassword = console.getStringInput("Enter your new account password:");
-                    casinoAccount.setAccountPassword(accountPassword);
+            } else if ("account-settings".equals(arcadeDashBoardInput)) {
+                CasinoAccount casinoAccount = casinoAccountManager.accountLogin();
+                String accountSettingsInput=getAccountSettingsInput();
+                if ("change-password".equalsIgnoreCase(accountSettingsInput)) {
+                    String password = console.getStringInput("Enter new password:");
+                    casinoAccount.setAccountPassword(password);
+                }
+                else if ("add-funds".equals(accountSettingsInput)){
+                    Integer funds = console.getIntegerInput("How much would you like to add?");
+                    casinoAccount.addFunds(funds);
+                }
+                else if ("remove-funds".equals(accountSettingsInput)){
+                    Integer funds = console.getIntegerInput("How much would you like to remove?");
+                    casinoAccount.addFunds(-funds);
+                }
+                else if ("check-balance".equals(accountSettingsInput)){
+                    console.println(""+casinoAccount.getProfile().getWallet());
+                }
+                else if ("delete-account".equals(accountSettingsInput)){
+                    casinoAccount = casinoAccountManager.accountLogin();
+                    String input = console.getStringInput("Are you sure you want to delete the account?");
+                    if (input.equalsIgnoreCase("yes")){
+                        casinoAccountManager.deleteAccount(casinoAccount);
+                    }
                 }
             }
         } while (!"logout".equals(arcadeDashBoardInput));
+        casinoAccountManager.saveAccounts();
     }
 
     private String getArcadeDashboardInput() {
         return console.getStringInput(new StringBuilder()
                 .append("Welcome to the Arcade Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ create-account ], [ change-password ], [ select-game ] [ logout ]")
+                .append("\n\t[ create-account ], [ account-settings ], [ select-game ], [ logout ]")
+                .toString());
+    }
+
+    private String getAccountSettingsInput() {
+        return console.getStringInput(new StringBuilder()
+                .append("Welcome to the Account Settings Dashboard!")
+                .append("\nFrom here, you can select any of the following options:")
+                .append("\n\t[ change-password ], [ add-funds ], [ remove-funds ], [ check-balance ]"
+                        + " [ delete-account ]"+" [ exit ]")
                 .toString());
     }
 
