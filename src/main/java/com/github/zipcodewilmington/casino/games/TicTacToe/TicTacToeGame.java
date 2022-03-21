@@ -23,11 +23,9 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
         Integer[] move;
         while (!exitFlag){
             Collections.shuffle(order);
-            for (TicTacToePlayer s : order){
-                selectSymbol(s);
-            }
             TicTacToePlayer player1 = order.get(0);
             TicTacToePlayer player2 = order.get(1);
+            selectSymbol();
             while (win.equals("")){
                 System.out.println(board.displayBoard());
                 while (invalidMoveFlag) {
@@ -36,6 +34,7 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
                             move[0]-1,move[1]-1);
                 }
                 win = getWinner();
+                System.out.println(board.displayBoard());
                 if (!win.equals(""))
                     break;
                 invalidMoveFlag = true;
@@ -45,8 +44,9 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
                             move[0]-1,move[1]-1);
                 }
                 win = getWinner();
+                invalidMoveFlag = true;
             }
-            System.out.println("Winner is: " + playerSymbolReverse.get(win));
+            System.out.println("Winner is: " + playerSymbolReverse.get(win).getPerson().getName());
             exit();
         }
     }
@@ -55,26 +55,36 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
         Integer [] move = new Integer[2];
         move[0]= console.getIntegerInput(player1.getPerson().getName()+
                 ", which row would you like to place your mark?");
-        while (move[0]<=0 || move[0]>=4){
+        while (move[0]<0 || move[0]>3){
             move[0] = console.getIntegerInput(player1.getPerson().getName()+
                     "not valid row! Which row would you like to place your mark?");
         }
         move[1] = console.getIntegerInput(player1.getPerson().getName()+
                 ", which column would you like to place your mark?");
-        while (move[1]<=0 || move[1]>=4){
+        while (move[1]<0 || move[1]>3){
             move[1] = console.getIntegerInput(player1.getPerson().getName()+
                     "not valid column! Which row would you like to place your mark?");
         }
         return move;
     }
 
-    public void selectSymbol(TicTacToePlayer player){
-        String symbol = console.getStringInput(player.getPerson().getName()+", " +
+    public void selectSymbol(){
+        String symbol = console.getStringInput(order.get(0).getPerson().getName()+", " +
                 "do you want to be X or O?");
         while (!(symbol.equalsIgnoreCase("X") || symbol.equalsIgnoreCase("O"))){
-            symbol = console.getStringInput(player.getPerson().getName()+", not a valid input." +
+            symbol = console.getStringInput(order.get(0).getPerson().getName()+", not a valid input." +
                     "Do you want to be X or O?");
         }
+        symbol=symbol.toUpperCase();
+        playerSymbol.put(order.get(0),symbol);
+        playerSymbolReverse.put(symbol,order.get(0));
+        if (symbol.equalsIgnoreCase("X"))
+            symbol="O";
+        else
+            symbol="X";
+        playerSymbol.put(order.get(1),symbol);
+        playerSymbolReverse.put(symbol,order.get(1));
+        System.out.println(order.get(1).getPerson().getName()+", you will be "+symbol);
     }
 
     @Override

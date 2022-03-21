@@ -13,10 +13,10 @@ public class Board {
     public boolean markBoard(String marker, int row, int column){
         if (board[row][column].equals("")) {
             board[row][column] = marker;
-            return true;
+            return false;
         }
         else
-            return false;
+            return true;
     }
 
     public String[][] getBoard() {
@@ -27,7 +27,9 @@ public class Board {
         String boardState = "";
         for (int i=0;i<3;i++){
             boardState += String.format(" %1s | %1s | %1s \n",
-                    board[i][1],board[i][2],board[i][3]);
+                    board[i][0],board[i][1],board[i][2]);
+            if (i<2)
+                boardState+="-----------\n";
         }
         return boardState;
     }
