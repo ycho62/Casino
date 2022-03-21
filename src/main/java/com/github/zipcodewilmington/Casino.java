@@ -52,8 +52,8 @@ public class Casino implements Runnable {
                         new BlackjackEngine( new BlackJack(),
                                 new BlackJackPlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("CEELO")) {
-//                        new CeeLoEngine( new CeeLoGame(),
-//                                new CeeLoPlayer(casinoAccount.getProfile())).start();
+                        new CeeLoEngine( new CeeLoGame(),
+                                new CeeLoPlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("ROULETTE")) {
                         new RouletteEngine(new RouletteGame(),
                                 new RoulettePlayer(casinoAccount.getProfile())).start();
