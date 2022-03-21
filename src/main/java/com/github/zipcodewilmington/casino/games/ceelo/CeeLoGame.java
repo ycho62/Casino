@@ -34,26 +34,24 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
 
                 for (CeeLoPlayer s : bets.keySet()) {
                     getRoll(s);
-                    playerRollValue.put(s,getValueToRoll(Dice.rollDice()));
-                    winConditionCheck(playerRollValue.values());// checking rollvalue in playerhand also figure out how to get 2 players
+                    playerRollValue.put(s, getValueToRoll(Dice.rollDice()));
+                }
+
+                winCondition(playerRollValue.keySet().toArray(new CeeLoPlayer[2])[0], playerRollValue.keySet().toArray(new CeeLoPlayer[2])[1]);
+
+                    // checking rollvalue in playerhand also figure out how to get 2 players
 //compare int value of roll to other player.
 //check against winnningCondition
 
 
             }
         }
-    }
 
-    public CeeLoGame(List<CeeLoPlayer> players) {
-        for (CeeLoPlayer s : players) {
-            this.bets.put(s, null);
-            this.playerRollValue.put(s,null);
-            if (bets.size() > maxPartySize) {
-                System.out.println("The max amount of players is 2 people.");
-                break;
+
+    public CeeLoGame() {
             }
-        }
-    }
+
+
 
     @Override
     public void setBets() {
@@ -81,7 +79,7 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println("Please 'roll' to get your dice roll");
+            System.out.println("Please 'roll' to get your dice roll ");
             String input = scanner.nextLine();
 
             if (input.equals("roll")) {
@@ -146,14 +144,13 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
             }
 
     }
-    @Override
-    public void winConditionCheck(CeeLoPlayer player) {
-        int ceeLoPlayer1 = getRoll(ceeLoPlayer);
-        int ceeLoPlayer2 = getRoll(player2);
+    public void winCondition(CeeLoPlayer player1, CeeLoPlayer player2) {
+        int ceeLoPlayer1 = playerRollValue.get(player1);
+        int ceeLoPlayer2 = playerRollValue.get(player2);
 
         if (ceeLoPlayer1 == 13) {
             System.out.println("Player 1 rolled a 4, 5, 6! It's an automatic win!");
-            // if either player gets 13, auto win and take money
+            //
 
         } else if (ceeLoPlayer2 == 13) {
             System.out.println("Player 2 rolled a 4, 5 6! It's an automatic win!");
@@ -186,7 +183,6 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
         }
     }
 
-
     @Override
     public void setPlayerMax() {
         this.maxPartySize = 2;
@@ -202,16 +198,13 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
         this.bets.remove(player);
     }
 
-
     @Override
-    public void exit() {
+    public void winConditionCheck(CeeLoPlayer player) {
 
     }
 
-
-
-    public void reRoll (CeeLoPlayer player) { //going to make player do the get roll method again.
-        Dice.rollDice();
+    @Override
+    public void exit() {
     }
 
 }
