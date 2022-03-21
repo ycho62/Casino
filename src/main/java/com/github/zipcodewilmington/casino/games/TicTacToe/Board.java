@@ -2,10 +2,16 @@ package com.github.zipcodewilmington.casino.games.TicTacToe;
 
 public class Board {
     String[][] board = new String[3][3];
-    public Board(){}
+    public Board(){
+        for (int i=0;i<3;i++){
+            for (int j=0;j<3;j++){
+                board[i][j]="";
+            }
+        }
+    }
 
     public boolean markBoard(String marker, int row, int column){
-        if (board[row][column] == null) {
+        if (board[row][column].equals("")) {
             board[row][column] = marker;
             return true;
         }
@@ -18,6 +24,11 @@ public class Board {
     }
 
     public String displayBoard() {
-        return null;
+        String boardState = "";
+        for (int i=0;i<3;i++){
+            boardState += String.format(" %1s | %1s | %1s \n",
+                    board[i][1],board[i][2],board[i][3]);
+        }
+        return boardState;
     }
 }
