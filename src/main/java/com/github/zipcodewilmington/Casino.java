@@ -4,17 +4,15 @@ import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.games.BlackJack.BlackJack;
 import com.github.zipcodewilmington.casino.games.BlackJack.BlackJackPlayer;
-import com.github.zipcodewilmington.casino.games.GameEngine.BlackjackEngine;
-import com.github.zipcodewilmington.casino.games.GameEngine.CeeLoEngine;
-import com.github.zipcodewilmington.casino.games.GameEngine.RouletteEngine;
-import com.github.zipcodewilmington.casino.games.GameInterface.GameInterface;
-import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.games.GameEngine.*;
+import com.github.zipcodewilmington.casino.games.RockPaperScissor.RockPaperScissorGame;
+import com.github.zipcodewilmington.casino.games.RockPaperScissor.RockPaperScissorPlayer;
 import com.github.zipcodewilmington.casino.games.Roulette.RouletteGame;
 import com.github.zipcodewilmington.casino.games.Roulette.RoulettePlayer;
+import com.github.zipcodewilmington.casino.games.TicTacToe.TicTacToeGame;
+import com.github.zipcodewilmington.casino.games.TicTacToe.TicTacToePlayer;
 import com.github.zipcodewilmington.casino.games.ceelo.CeeLoGame;
 import com.github.zipcodewilmington.casino.games.ceelo.CeeLoPlayer;
-import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessGame;
-import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessPlayer;
 import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
@@ -48,29 +46,34 @@ public class Casino implements Runnable {
                 if (isValidLogin) {
                     String gameSelectionInput = getGameSelectionInput().toUpperCase();
                     if (gameSelectionInput.equals("SLOTS")) {
+//                        new SlotsEngine( new SlotsGame(),
+//                                new SlotsPlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("BLACKJACK")) {
-                        List<BlackJackPlayer> blackJackPlayerList = new ArrayList<>();
-                        blackJackPlayerList.add(new BlackJackPlayer(casinoAccount.getProfile()));
-                        new BlackjackEngine( new BlackJack(), blackJackPlayerList).start();
+                        new BlackjackEngine( new BlackJack(),
+                                new BlackJackPlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("CEELO")) {
-                        List<CeeLoPlayer> ceeLoPlayerList = new ArrayList<>();
-                        ceeLoPlayerList.add(new CeeLoPlayer(casinoAccount.getProfile()));
-                        new CeeLoEngine(new CeeLoGame(), ceeLoPlayerList).start();
+                        new CeeLoEngine( new CeeLoGame(),
+                                new CeeLoPlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("ROULETTE")) {
-                        List<RoulettePlayer> roulettePlayerList = new ArrayList<>();
-                        roulettePlayerList.add(new RoulettePlayer(casinoAccount.getProfile()));
-                        new RouletteEngine(new RouletteGame(), roulettePlayerList).start();
+                        new RouletteEngine(new RouletteGame(),
+                                new RoulettePlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("TICTACTOE")) {
+                        new TicTacToeEngine(new TicTacToeGame(),
+                                new TicTacToePlayer(casinoAccount.getProfile())).start();
                     } else if (gameSelectionInput.equals("ROCKPAPERSCISSOR")) {
+                        new RockPaperScissorEngine(new RockPaperScissorGame(),
+                                new RockPaperScissorPlayer(casinoAccount.getProfile())).start();
                     } else {
                         // TODO - implement better exception handling
-                        String errorMessage = "[ %s ] is an invalid game selection";
-                        throw new RuntimeException(String.format(errorMessage, gameSelectionInput));
+//                        String errorMessage = "[ %s ] is an invalid game selection";
+//                        throw new RuntimeException(String.format(errorMessage, gameSelectionInput));
+                        System.out.println("Invalid entry");
                     }
                 } else {
-                    // TODO - implement better exception handling
-                    String errorMessage = "No account found.";
-                    throw new RuntimeException(String.format(errorMessage));
+//                    // TODO - implement better exception handling
+//                    String errorMessage = "No account found.";
+//                    throw new RuntimeException(String.format(errorMessage));
+                    System.out.println("Invalid entry");
                 }
             } else if ("create-account".equals(arcadeDashBoardInput)) {
                 console.println("Welcome to the account-creation screen.");
@@ -137,10 +140,10 @@ public class Casino implements Runnable {
                 .toString());
     }
 
-    private void play(Object gameObject, Object playerObject) {
-        GameInterface game = (GameInterface)gameObject;
-        PlayerInterface player = (PlayerInterface)playerObject;
-        game.add(player);
-        game.run();
-    }
+//    private void play(Object gameObject, Object playerObject) {
+//        GameInterface game = (GameInterface)gameObject;
+//        PlayerInterface player = (PlayerInterface)playerObject;
+//        game.add(player);
+//        game.run();
+//    }
 }

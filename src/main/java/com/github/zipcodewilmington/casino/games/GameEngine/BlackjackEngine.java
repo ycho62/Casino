@@ -11,8 +11,8 @@ import java.util.List;
 public class BlackjackEngine extends GameEngine<BlackJackPlayer, BlackJack> {
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
 
-    public BlackjackEngine(BlackJack game, List<BlackJackPlayer> players){
-        super(game, players);
+    public BlackjackEngine(BlackJack game, BlackJackPlayer player){
+        super(game, player);
     }
 
     @Override
@@ -20,6 +20,7 @@ public class BlackjackEngine extends GameEngine<BlackJackPlayer, BlackJack> {
         getGame().setPlayerMax();
         CasinoAccountManager casinoAccountManager = new CasinoAccountManager();
         casinoAccountManager.loadAccounts();
+        System.out.println("Max amount of Players supported: "+getGame().getMaxPartySize());
         String input = console.getStringInput("Do you want to add more players to the game? (Yes/no)");
         while(input.equalsIgnoreCase("yes") && getPlayers().size() < getGame().getMaxPartySize()){
             getPlayers().add(new BlackJackPlayer(casinoAccountManager.accountLogin().getProfile()));
