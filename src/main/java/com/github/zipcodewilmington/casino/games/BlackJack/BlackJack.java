@@ -103,11 +103,12 @@ public class BlackJack implements GamblingGame<BlackJackPlayer> {
         Card temp;
         int cardValue = 0;
         while (true) {
+            System.out.println(displayCard(playerHand.get(player),player.getPerson().getName()));
             if(blackJackFlag.get(player))
                 break;
-            if (bustCheck(player).equals("Busted!"))
+            if (bustCheck(player).equals("Busted!")) {
                 break;
-            System.out.println(displayCard(playerHand.get(player),player.getPerson().getName()));
+            }
             input = console.getStringInput(player.getPerson().getName() + ", do you want to hit, double, or stay?");
             if (input.equalsIgnoreCase("hit")) {
                 draw(player);
@@ -130,6 +131,7 @@ public class BlackJack implements GamblingGame<BlackJackPlayer> {
                 AceFlag.put(player, false);
             } else {
                 winLose.put(player, false);
+                System.out.println("Busted!");
                 return "Busted!";
             }
         }

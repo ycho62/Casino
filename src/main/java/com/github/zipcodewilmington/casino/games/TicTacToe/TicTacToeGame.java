@@ -51,7 +51,7 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
         }
     }
 
-    private Integer[] getMove(TicTacToePlayer player1) {
+    public Integer[] getMove(TicTacToePlayer player1) {
         Integer [] move = new Integer[2];
         move[0]= console.getIntegerInput(player1.getPerson().getName()+
                 ", which row would you like to place your mark?");
