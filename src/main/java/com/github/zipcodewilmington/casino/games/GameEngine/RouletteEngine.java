@@ -1,17 +1,17 @@
 package com.github.zipcodewilmington.casino.games.GameEngine;
 
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
-import com.github.zipcodewilmington.casino.games.BlackJack.BlackJack;
-import com.github.zipcodewilmington.casino.games.BlackJack.BlackJackPlayer;
+import com.github.zipcodewilmington.casino.games.Roulette.RouletteGame;
+import com.github.zipcodewilmington.casino.games.Roulette.RoulettePlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
 import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.util.List;
 
-public class BlackjackEngine extends GameEngine<BlackJackPlayer, BlackJack> {
+public class RouletteEngine extends GameEngine<RoulettePlayer, RouletteGame> {
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
 
-    public BlackjackEngine(BlackJack game, BlackJackPlayer player){
+    public RouletteEngine(RouletteGame game, RoulettePlayer player){
         super(game, player);
     }
 
@@ -23,10 +23,10 @@ public class BlackjackEngine extends GameEngine<BlackJackPlayer, BlackJack> {
         System.out.println("Max amount of Players supported: "+getGame().getMaxPartySize());
         String input = console.getStringInput("Do you want to add more players to the game? (Yes/no)");
         while(input.equalsIgnoreCase("yes") && getPlayers().size() < getGame().getMaxPartySize()){
-            getPlayers().add(new BlackJackPlayer(casinoAccountManager.accountLogin().getProfile()));
+            getPlayers().add(new RoulettePlayer(casinoAccountManager.accountLogin().getProfile()));
             input=console.getStringInput("More players? (Yes/No)");
         }
-        for (BlackJackPlayer s: getPlayers()){
+        for (RoulettePlayer s: getPlayers()){
             getGame().addPlayer(s);
         }
         getGame().play();

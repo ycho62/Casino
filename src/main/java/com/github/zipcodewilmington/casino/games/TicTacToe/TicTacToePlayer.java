@@ -1,14 +1,11 @@
-package com.github.zipcodewilmington.casino.games.BlackJack;
+package com.github.zipcodewilmington.casino.games.TicTacToe;
 
 import com.github.zipcodewilmington.casino.games.Person.Gambler;
 import com.github.zipcodewilmington.casino.games.Person.Person;
 import com.github.zipcodewilmington.casino.games.Person.Player;
 
-public class BlackJackPlayer extends Player implements Gambler {
-
-    public BlackJackPlayer(Person person) {
-        super(person);
-    }
+public class TicTacToePlayer extends Player implements Gambler {
+    public TicTacToePlayer(Person person){super(person);}
 
     @Override
     public void addWinning(int winning) {

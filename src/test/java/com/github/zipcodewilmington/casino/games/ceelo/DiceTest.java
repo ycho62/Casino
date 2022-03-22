@@ -16,7 +16,7 @@ class DiceTest {
         Random diceNumber = new Random();
 //        Random diceNumber= new Random();
         //then
-        int[] actual = Dice.rollDice(diceNumber);
+        int[] actual = Dice.rollDice();
         for (int j : actual) {
         //
         Assert.assertTrue(j > 0 && j < 7);
@@ -28,7 +28,7 @@ class DiceTest {
 
         Random diceNumber = new Random();
 
-        int[] actual = Dice.rollDice(diceNumber);
+        int[] actual = Dice.rollDice();
         for (int i = 0; i < actual.length; i++) {
             Assert.assertFalse(actual[i] > 0 && actual[i] > 7);
         }

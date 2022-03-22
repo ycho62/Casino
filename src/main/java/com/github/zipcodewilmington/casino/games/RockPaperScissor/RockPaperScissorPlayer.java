@@ -1,12 +1,11 @@
-package com.github.zipcodewilmington.casino.games.BlackJack;
+package com.github.zipcodewilmington.casino.games.RockPaperScissor;
 
 import com.github.zipcodewilmington.casino.games.Person.Gambler;
 import com.github.zipcodewilmington.casino.games.Person.Person;
 import com.github.zipcodewilmington.casino.games.Person.Player;
 
-public class BlackJackPlayer extends Player implements Gambler {
-
-    public BlackJackPlayer(Person person) {
+public class RockPaperScissorPlayer extends Player implements Gambler {
+    public RockPaperScissorPlayer (Person person){
         super(person);
     }
 

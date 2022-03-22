@@ -1,5 +1,11 @@
 package com.github.zipcodewilmington.casino;
 
+import com.github.zipcodewilmington.casino.games.Person.Person;
+import com.github.zipcodewilmington.casino.games.Person.Player;
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +14,10 @@ import java.util.Map;
  * `ArcadeAccountManager` stores, manages, and retrieves `ArcadeAccount` objects
  * it is advised that every instruction in this class is logged
  */
-public class CasinoAccountManager {
+public class CasinoAccountManager implements Serializable {
+    private static final long serialVersionUID= 1L;
     Map<String, CasinoAccount> casinoAccounts = new HashMap<>();
+    private final IOConsole console = new IOConsole(AnsiColor.BLUE);
     /**
      * @param accountName     name of account to be returned
      * @param accountPassword password of account to be returned
@@ -38,6 +46,7 @@ public class CasinoAccountManager {
     public CasinoAccount createAccount(String accountName, String accountPassword) {
         CasinoAccount newAccount = new CasinoAccount(accountName, accountPassword);
         registerAccount(newAccount);
+        saveAccounts();
         return newAccount;
     }
 
@@ -48,5 +57,60 @@ public class CasinoAccountManager {
      */
     public void registerAccount(CasinoAccount casinoAccount) {
         casinoAccounts.put(casinoAccount.getAccountName(), casinoAccount);
+    }
+
+    public CasinoAccount accountLogin() {
+        boolean isValidLogin;
+        CasinoAccount casinoAccount;
+        do {
+            String accountName = console.getStringInput("Enter your account name:");
+            String accountPassword = console.getStringInput("Enter your account password:");
+            casinoAccount = getAccount(accountName, accountPassword);
+            isValidLogin = casinoAccount != null;
+        } while (!isValidLogin);
+        return casinoAccount;
+    }
+
+    public void loadAdminAccount(){
+        CasinoAccount adminAccount = new CasinoAccount("admin", "admin");
+        adminAccount.createProfile("admin",Integer.MAX_VALUE);
+        casinoAccounts.put("admin",adminAccount);
+    }
+
+    public boolean loadAccounts(){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("accounts.db"));
+            Map<String, CasinoAccount> temp = (Map<String,CasinoAccount>) ois.readObject();
+            if (temp !=null){
+                casinoAccounts = temp;
+            }
+            ois.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            loadAdminAccount();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean saveAccounts(){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("accounts.db"));
+            oos.writeObject(casinoAccounts);
+            oos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void deleteAccount(CasinoAccount casinoAccount) {
+        casinoAccounts.remove(casinoAccount.getAccountName());
     }
 }
