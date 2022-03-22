@@ -123,11 +123,6 @@ public class SlotsGame implements GamblingGame<SlotsPlayer> {
     }
 
     @Override
-    public SlotsPlayer[] getWinner() {
-        return new SlotsPlayer[0];
-    }
-
-    @Override
     public void exit() {
 
     }
