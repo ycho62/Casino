@@ -33,7 +33,7 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
                     invalidMoveFlag = board.markBoard(playerSymbol.get(player1),
                             move[0]-1,move[1]-1);
                 }
-                win = getWinner();
+                win = getWinner(board.getBoard());
                 System.out.println(board.displayBoard());
                 if (!win.equals(""))
                     break;
@@ -43,7 +43,7 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
                     invalidMoveFlag = board.markBoard(playerSymbol.get(player2),
                             move[0]-1,move[1]-1);
                 }
-                win = getWinner();
+                win = getWinner(board.getBoard());
                 invalidMoveFlag = true;
             }
             System.out.println("Winner is: " + playerSymbolReverse.get(win).getPerson().getName());
@@ -92,26 +92,26 @@ public class TicTacToeGame implements Games<TicTacToePlayer> {
         order.add(player);
     }
 
-    public String getWinner(){
+    public String getWinner(String[][] boardState){
         String winner="";
-        if ((board.getBoard()[0][0] == board.getBoard()[1][1]) &&
-                (board.getBoard()[0][0] == board.getBoard()[2][2])) {
-            winner = board.getBoard()[0][0];
+        if ((boardState[0][0] == boardState[1][1]) &&
+                (boardState[0][0] == boardState[2][2])) {
+            winner = boardState[0][0];
         }
-        else if ((board.getBoard()[2][0] == board.getBoard()[0][2]) &&
-                (board.getBoard()[2][0] == board.getBoard()[1][1])) {
-            winner = board.getBoard()[1][1];
+        else if ((boardState[2][0] == boardState[0][2]) &&
+                (boardState[2][0] == boardState[1][1])) {
+            winner = boardState[1][1];
         }
         else{
             for (int i=0;i<3;i++) {
-                if ((board.getBoard()[i][0] == board.getBoard()[i][1]) &&
-                        (board.getBoard()[i][0] == board.getBoard()[i][2])){
-                    winner = board.getBoard()[i][0];
+                if ((boardState[i][0] == boardState[i][1]) &&
+                        (boardState[i][0] == boardState[i][2])){
+                    winner = boardState[i][0];
                     break;
                 }
-                else if ((board.getBoard()[0][i] == board.getBoard()[1][i]) &&
-                        (board.getBoard()[0][i] == board.getBoard()[2][i])){
-                    winner = board.getBoard()[0][i];
+                else if ((boardState[0][i] == boardState[1][i]) &&
+                        (boardState[0][i] == boardState[2][i])){
+                    winner = boardState[0][i];
                     break;
                 }
             }
