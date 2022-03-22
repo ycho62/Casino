@@ -7,12 +7,20 @@ import com.github.zipcodewilmington.casino.games.BlackJack.BlackJackPlayer;
 import com.github.zipcodewilmington.casino.games.GameEngine.*;
 import com.github.zipcodewilmington.casino.games.RockPaperScissor.RockPaperScissorGame;
 import com.github.zipcodewilmington.casino.games.RockPaperScissor.RockPaperScissorPlayer;
+import com.github.zipcodewilmington.casino.games.GameInterface.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import com.github.zipcodewilmington.casino.games.Roulette.RouletteGame;
 import com.github.zipcodewilmington.casino.games.Roulette.RoulettePlayer;
 import com.github.zipcodewilmington.casino.games.TicTacToe.TicTacToeGame;
 import com.github.zipcodewilmington.casino.games.TicTacToe.TicTacToePlayer;
 import com.github.zipcodewilmington.casino.games.ceelo.CeeLoGame;
 import com.github.zipcodewilmington.casino.games.ceelo.CeeLoPlayer;
+
+import com.github.zipcodewilmington.casino.games.Person.Person;
+
+import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessGame;
+import com.github.zipcodewilmington.casino.games.numberguess.NumberGuessPlayer;
 import com.github.zipcodewilmington.casino.games.slots.SlotsGame;
 import com.github.zipcodewilmington.casino.games.slots.SlotsPlayer;
 import com.github.zipcodewilmington.utils.AnsiColor;
@@ -48,6 +56,7 @@ public class Casino implements Runnable {
                     if (gameSelectionInput.equals("SLOTS")) {
 //                        new SlotsEngine( new SlotsGame(),
 //                                new SlotsPlayer(casinoAccount.getProfile())).start();
+                play(new SlotsGame(), new SlotsPlayer(new Person("Mike",2 )));
                     } else if (gameSelectionInput.equals("BLACKJACK")) {
                         new BlackjackEngine( new BlackJack(),
                                 new BlackJackPlayer(casinoAccount.getProfile())).start();
