@@ -10,6 +10,7 @@ import java.util.*;
 
 
 public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
+    Dice dice = new Dice();
     Scanner scanner = new Scanner(System.in);
     private Map<CeeLoPlayer, Integer> bets = new HashMap<>();
     private int maxPartySize;
@@ -33,8 +34,8 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
                 setBets();
 
                 for (CeeLoPlayer s : bets.keySet()) {
-                    getRoll(s);
-                    playerRollValue.put(s, getValueToRoll(Dice.rollDice()));
+//                    getRoll(s);
+
                 }
 
                 winCondition(playerRollValue.keySet().toArray(new CeeLoPlayer[2])[0], playerRollValue.keySet().toArray(new CeeLoPlayer[2])[1]);
@@ -75,75 +76,82 @@ public class CeeLoGame implements GamblingGame<CeeLoPlayer> {
         }
     }
 
-    public int getRoll(CeeLoPlayer player) {
-
+    public int getRoll(CeeLoPlayer player, String playerChoice) {
+        int rollNumberValue = 0;
         Scanner scanner = new Scanner(System.in);
-        while(true) {
+        while (this.getValueToRoll()!=0) {
             System.out.println("Please 'roll' to get your dice roll ");
-            String input = scanner.nextLine();
+//            String input = scanner.nextLine();
 
-            if (input.equals("roll")) {
-                Dice.rollDice();
-                if(checkIfValidRoll(Dice.rollDice())) { // check if valid before assigning to player
-                    System.out.println("Your roll was " + Dice.rollDice());
-//                    assignRoll.put(player, Dice.rollDice());
-                    getValueToRoll(Dice.rollDice());// assigns roll value to a valid roll.
-                }
-                break;
-            } else System.out.println("Not a valid input.");
-                break;
+            if (playerChoice.equals("roll")) {
+                rollNumberValue = getValueToRoll();
+
+//                if(checkIfValidRoll(dice.rollDice())) {
+//                    System.out.println("Your roll was " + dice.rollDice());
+////                    assignRoll.put(player, Dice.rollDice());
+//                    player.setRollValue(getValueToRoll(dice.rollDice()));// assigns roll value to a valid roll.
+//                }
+//                break;
+//            } else System.out.println("Not a valid input.");
+//                break;
+            }
+
         }
-        return 0;
+        return rollNumberValue;
     }
+
     //    have all dice combinations resolve to a single number
 //    Invalid rolls will result in 0 or re-roll
 //    Rolls with dice1 and dice2 have same values and dice 3 has a different value, result = dice 3
 //    Rolls with all three dice that are the same = 6 + the dice value.
 
-    public int getValueToRoll(int[] diceArray) {
-        int rollValue = 0;
-
-        for (int i = 0; i < diceArray.length; i++) {
-            if (diceArray[0] == 4 && diceArray[1] == 5 && diceArray[2] == 6) {///automatic win break out of game pay winnings
+    public int getValueToRoll() {
+        int rollValue = 0;// if roll value is 0 reroll
+            dice.rollDice();
+            if (dice.getRollDice(0) == 4 && dice.getRollDice(1) == 5 && dice.getRollDice(2) == 6) {///automatic win break out of game pay winnings
                 return rollValue = 13;
-            }else if(diceArray[0] == 1 && diceArray[1] == 2 && diceArray[2] == 3) {///automatic lose break out of game lose bet.
+
+            }else if(dice.getRollDice(0) == 1 && dice.getRollDice(1) == 2 && dice.getRollDice(2) == 3) {///automatic lose break out of game lose bet.
                 return rollValue = -1;
-            }else if (diceArray[0]==(diceArray[1]) && diceArray[0]==(diceArray[2])){
-                return rollValue = diceArray[0] + 6;
-            }else if (diceArray[0]==(diceArray[1])){
-                return rollValue = diceArray[2];
-            }else if (diceArray[0]==(diceArray[2])){
-                return rollValue = diceArray[1];
-            }else if (diceArray[1]==(diceArray[2])){
-                return rollValue = diceArray[0];
+
+            }else if (dice.getRollDice(0)==(dice.getRollDice(1)) && dice.getRollDice(0)==(dice.getRollDice(2))){
+                return rollValue = dice.getRollDice(0) + 6;
+
+            }else if (dice.getRollDice(0)==(dice.getRollDice(1))){
+                return rollValue = dice.getRollDice(2);
+
+            }else if (dice.getRollDice(0)==(dice.getRollDice(2))){
+                return rollValue = dice.getRollDice(1);
+
+            }else if (dice.getRollDice(1)==(dice.getRollDice(2))){
+                return rollValue = dice.getRollDice(0);
             }
-        }
+
         return rollValue;
     }
+
     @Override
     public void distributeWinningsToWinners(CeeLoPlayer winner) {winner.addWinning(bets.get(winner));}
 
 
 
-    public boolean checkIfValidRoll(int[] diceArray) {// if non valid
-         Arrays.sort(diceArray);
-            if (diceArray[0] == 4 && diceArray[1] == 5 && diceArray[2] == 6) {///automatic win break out of game pay winnings
-                return true;
-            } else if (diceArray[0] == 1 && diceArray[1] == 2 && diceArray[2] == 3) {///automatic lose break out of game lose bet.
-                return true;
-            } else if (diceArray[0] == (diceArray[1]) && diceArray[0] == (diceArray[2])) {
-                return true;
-            } else if (diceArray[0] == diceArray[1] && diceArray[0] != diceArray[2]) {
-                return true;
-            } else if (diceArray[1] == diceArray[0] && diceArray[1] != diceArray[2]) {
-                return true;
-            } else if (diceArray[2] == diceArray[0] && diceArray[2] != diceArray[1]) {
-                return true;
-            }else {
-                return false;
-            }
+//    public boolean checkIfValidRoll(int[] diceArray) {// if non valid
+//         Arrays.sort(diceArray);
+//            if (diceArray[0] == 4 && diceArray[1] == 5 && diceArray[2] == 6) {///automatic win break out of game pay winnings
+//                return true;
+//            } else if (diceArray[0] == 1 && diceArray[1] == 2 && diceArray[2] == 3) {///automatic lose break out of game lose bet.
+//                return true;
+//            } else if (diceArray[0] == (diceArray[1]) && diceArray[0] == (diceArray[2])) {// triple
+//                return true;
+//            } else if (diceArray[0] == diceArray[1] && diceArray[0] != diceArray[2]) {//
+//                return true;
+//            } else if (diceArray[1] == diceArray[2] && diceArray[1] != diceArray[0]) {
+//                return true;
+//            } else {
+//                return false;
+//            }
 
-    }
+//    }
     public void winCondition(CeeLoPlayer player1, CeeLoPlayer player2) {
         int ceeLoPlayer1 = playerRollValue.get(player1);
         int ceeLoPlayer2 = playerRollValue.get(player2);
