@@ -8,10 +8,16 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CeeLoPlayer extends Player implements Gambler {
+    private int rollValue;
+
 
     public CeeLoPlayer(Person person) {
         super(person);
     }
+
+    public void setRollValue(int rollValue){this.rollValue = rollValue;}
+
+    public int getRollValue(){return rollValue;}
 
     @Override
     public void addWinning(int winning) {
